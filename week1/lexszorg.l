@@ -24,7 +24,6 @@ int yywrap(){}
 int main(){
 
 
-yylex();
 printf("\nMassalhangzok szama a szovegben: %d\n", msh);
 printf("\nMaganhangzok szama a szovegben: %d\n", mgh);
 return 0;
