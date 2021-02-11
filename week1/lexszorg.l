@@ -22,7 +22,8 @@ end return 0;
 
 int main(){
 
-yylex(){};
+
+yylex();
 printf("\nMassalhangzok szama a szovegben: %d\n", msh);
 printf("\nMaganhangzok szama a szovegben: %d\n", mgh);
 return 0;
