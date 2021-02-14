@@ -20,7 +20,6 @@ end return 0;
 
 %%
 
-int yywrap(){}
 int main(){
 
 
