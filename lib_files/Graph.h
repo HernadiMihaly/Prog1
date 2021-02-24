@@ -14,29 +14,28 @@ namespace Graph_lib {
 bool intersect(Point p1, Point p2, Point p3, Point p4);
 
 struct Color {
-	enum Color_type {
-		red=FL_RED, blue=FL_BLUE, green=FL_GREEN,
+enum Color_type {red=FL_RED, blue=FL_BLUE, green=FL_GREEN,
 		yellow=FL_YELLOW, white=FL_WHITE, black=FL_BLACK,
 		magenta=FL_MAGENTA, cyan=FL_CYAN, dark_red=FL_DARK_RED,
 		dark_green=FL_DARK_GREEN, dark_yellow=FL_DARK_YELLOW, dark_blue=FL_DARK_BLUE,
-		dark_magenta=FL_DARK_MAGENTA, dark_cyan=FL_DARK_CYAN
-	};
-	enum Transparency { invisible = 0, visible = 255 };
+		dark_magenta=FL_DARK_MAGENTA, dark_cyan=FL_DARK_CYAN};
 
-	Color(Color_type cc): c(Fl_Color(cc)), v(visible) {}
-	Color(Color_type cc, Transparency vv): c(Fl_Color(cc)), v(vv) {}
-	Color(int cc): c(Fl_Color(cc)), v(visible) {}
-	Color(Transparency vv): c(Fl_Color()), v(vv) {}
+enum Transparency {invisible=0, visible=255};
 
-	int as_int() const { return c; }
-	char visibility() const { return v; }
-	void set_visibility(Transparency vv) { v = vv; }
+Color(Color_type cc): c(Fl_Color(cc)), v(visible){}
+Color(Color_type cc, Transparency vv): c(Fl_Color(cc)), v(vv){}
+Color(int cc): c(Fl_Color(cc)), v(visible){}
+Color(Transparency vv): c(Fl_Color()), v(vv){}
+
+int as_int() const {return c;}
+char visibility() {return v;}
+void set_visibility(Transparency vv) {v=vv;}
+
 
 private:
-	unsigned char v;
-	Fl_Color c;
+unsigned char v;
+Fl_Color c;
 };
-
 struct Line_style {
 	enum Line_style_type {
 		solid=FL_SOLID,				// -------
@@ -158,15 +157,21 @@ public:
 };
 
 struct Line : Shape {
-	Line (Point p1, Point p2) { add(p1); add(p2); }
+Line(Point p1, Point p2){ add(p1); add(p2);}
+
 };
 
 struct Lines : Shape {
-	Lines(){}
-	Lines(initializer_list<Point> lst): Shape{lst} 
-		{if ( lst.size() % 2 ) error("páratlan számú pontok");}
-	void draw_lines() const;
-	void add(Point p1, Point p2) { Shape::add(p1); Shape::add(p2); }
+Lines(){}
+Lines(initializer_list<Point> lst): Shape{lst} 
+	{if(lst.size()%2==1)
+	error("paratlan szamu pontok");
+	}
+	
+void draw_lines() const;
+void add(Point p1, Point p2)
+{Shape::add(p1); Shape::add(p2);}
+
 };
 
 struct Open_polyline : Shape {

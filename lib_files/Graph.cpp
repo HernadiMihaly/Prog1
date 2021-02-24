@@ -61,7 +61,7 @@ void Shape::draw() const
 
 void Lines::draw_lines() const
 {
-	if (color().visibility())
+	if (color().visibility()!=0)
 		for (int i = 1; i < number_of_points(); i+=2)
 			fl_line(point(i-1).x, point(i-1).y, point(i).x, point(i).y);
 }
