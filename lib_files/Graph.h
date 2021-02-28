@@ -215,23 +215,25 @@ private:
 };
 
 struct Text : Shape {
+
+Text (Point x, const string& s): lab(s) {add(x);}
+
+void draw_lines() const;
+
+void set_label(const string& s) {lab=s;}
+string label() const {return lab;}
+
+void set_font(Font f) {fnt= f;}
+Font font() const {return fnt;}
+
+void set_font_size(int s) {fnt_sz=s;}
+int font_size() const {return fnt_sz;}
+
 private:
-	string lab;
-	Font fnt { fl_font() };
-	int fnt_sz { 14<fl_size() ? fl_size() : 14 };
-public:
-	Text(Point x, const string& s): lab {s} { add(x); }
+string lab;
+Font fnt {fl_font()};
+int fnt_sz {(fl_size()<14)?14:fl_size()};
 
-	void draw_lines() const;
-
-	void set_label(const string& s) { lab = s; }
-	string label() const { return lab; }
-
-	void set_font(Font f) {fnt = f;}
-	Font font() const { return Font(fnt); }
-
-	void set_font_size(int sz) { fnt_sz = sz; }
-	int font_size() const { return fnt_sz; }
 };
 
 struct Circle : Shape
@@ -281,12 +283,18 @@ private:
 };
 
 
-struct Marked_polyline : Open_polyline
-{
-	Marked_polyline(const string& m): mark(m) { }
-	void draw_lines() const;
+struct Marked_polyline: Open_polyline {
+
+Marked_polyline(const string& m): mark{m} 
+	{if (m=="") mark="*";}
+Marked_polyline(const string& m, initializer_list<Point> lst): Open_polyline{lst}, mark{m}
+	{ if (m=="") mark="*";}
+	
+void draw_lines() const;
+
 private:
-	string mark;
+string mark;
+
 };
 
 struct Marks : Marked_polyline
