@@ -61,6 +61,11 @@ for (int j=0; j<8; j++)
 	    }
 	    k+=100;
     }
+//6.
+
+Arc rc (Point{0,0}, 20, 30);
+win.attach(rc);
+win.wait_for_button();
     
 }
 catch(exception& e){
