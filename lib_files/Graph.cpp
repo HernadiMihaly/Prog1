@@ -66,6 +66,34 @@ void Lines::draw_lines() const
 			fl_line(point(i-1).x, point(i-1).y, point(i).x, point(i).y);
 }
 
+void Arrow::draw_lines() const
+{
+	Line::draw_lines();
+	
+	double vonalhossz= sqrt(double(pow(point(1).x-point(0).x,2) + pow(point(1).y-point(0).y,2)));
+	
+	//vonal végpontjai
+	double vonal_x = 8/vonalhossz*point(0).x + (1-8/vonalhossz)*point(1).x;
+    	double vonal_y = 8/vonalhossz*point(0).y + (1-8/vonalhossz)*point(1).y;
+	
+	//vertex bal oldali vonala
+	double pl_x = vonal_x + 4/vonalhossz*(point(1).y-point(0).y);
+	double pl_y = vonal_y + 4/vonalhossz*(point(0).x-point(1).x);
+	
+	//vertex jobb oldali vonala
+	double pr_x = vonal_x + 4/vonalhossz*(point(0).y-point(1).y);
+	double pr_y = vonal_y + 4/vonalhossz*(point(1).x-point(0).x);
+
+    if (color().visibility()) {
+        fl_begin_complex_polygon();
+        fl_vertex(point(1).x,point(1).y);
+        fl_vertex(pl_x,pl_y);
+        fl_vertex(pr_x,pr_y);
+        fl_end_complex_polygon();
+    }
+	
+}
+
 void Open_polyline::draw_lines() const
 {
 		if (fill_color().visibility()) {
@@ -133,6 +161,57 @@ void Rectangle::draw_lines() const
 	}
 }
 
+
+void Box::draw_lines() const
+{
+    if (fill_color().visibility()) {
+        fl_color(fill_color().as_int());
+        
+        fl_rectf(point(0).x+rad, point(0).y, w-2*rad, rad);
+        fl_rectf(point(0).x, point(0).y+rad, w, h-2*rad);
+        fl_rectf(point(0).x+rad, point(0).y+h-rad, w-2*rad,rad);
+
+        fl_pie(point(0).x,point(0).y,2*rad,2*rad,90,180);
+        fl_pie(point(0).x+w-2*rad,point(0).y,2*rad,2*rad,0,90);
+        fl_pie(point(0).x,point(0).y+h-2*rad,2*rad,2*rad,180,270);
+        fl_pie(point(0).x+w-2*rad,point(0).y+h-2*rad,2*rad,2*rad,270,360);
+
+        fl_color(color().as_int());
+    }
+    if (color().visibility()) {
+        fl_color(color().as_int());
+        
+        fl_line(point(0).x+rad,point(0).y,
+            point(0).x+w-rad-1,point(0).y);
+        fl_line(point(0).x,point(0).y+rad,
+            point(0).x,point(0).y+h-rad-1);
+        fl_line(point(0).x+rad,point(0).y+h-1,
+            point(0).x+w-rad,point(0).y+h-1);
+        fl_line(point(0).x+w-1,point(0).y+rad,
+            point(0).x+w-1,point(0).y+h-rad);
+
+        fl_arc(point(0).x,point(0).y,2*rad,2*rad,90,180);
+        fl_arc(point(0).x+w-2*rad,point(0).y,2*rad,2*rad,0,90);
+        fl_arc(point(0).x,point(0).y+h-2*rad,2*rad,2*rad,180,270);
+        fl_arc(point(0).x+w-2*rad,point(0).y+h-2*rad,2*rad,2*rad,270,360);
+    }
+}
+
+void BoxText::draw_lines() const{
+	Box::draw_lines();
+	label.draw();
+}
+
+void BoxText::move(int dx, int dy){
+	Box::move(dx,dy);
+	label.move(dx,dy);
+}
+
+void BoxText::set_color(Color c){
+	Box::set_color(c);
+	label.set_color(c);
+}
+
 void Text::draw_lines() const
 {
 	int ofnt = fl_font();
@@ -154,6 +233,20 @@ void Circle::draw_lines() const
 		fl_color(color().as_int());
 		fl_arc(point(0).x, point(0).y, r+r, r+r, 0, 360);
 	}
+}
+
+void Arc::draw_lines() const
+{
+	
+	if (fill_color().visibility()){
+		fl_color(fill_color().as_int());
+		fl_pie(point(0).x, point(0).y, w+w-1, h+h-1, a1, a2);
+		fl_color(color().as_int());
+	}
+	
+	if (color().visibility())
+	fl_color(color().as_int());
+	fl_arc(point(0).x, point(0).y, w+w, h+h, a1, a2);
 }
 
 //------------------------------------------------------------------------------

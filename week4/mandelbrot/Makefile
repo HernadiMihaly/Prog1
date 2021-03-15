@@ -37,7 +37,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = mandelbrot1.0.0
-DISTDIR = /home/misi/Asztal/mandelbrot/.tmp/mandelbrot1.0.0
+DISTDIR = /home/misi/Asztal/prog1ora/Prog1/week2/mandelbrot/.tmp/mandelbrot1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-O1
 LIBS          = $(SUBLIBS) /usr/lib/x86_64-linux-gnu/libQt5Widgets.so /usr/lib/x86_64-linux-gnu/libQt5Gui.so /usr/lib/x86_64-linux-gnu/libQt5Core.so /usr/lib/x86_64-linux-gnu/libGL.so -lpthread   
@@ -54,12 +54,10 @@ OBJECTS_DIR   = ./
 
 SOURCES       = frakablak.cpp \
 		frakszal.cpp \
-		main.cpp moc_frakablak.cpp \
-		moc_frakszal.cpp
+		main.cpp moc_frakszal.cpp
 OBJECTS       = frakablak.o \
 		frakszal.o \
 		main.o \
-		moc_frakablak.o \
 		moc_frakszal.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
@@ -352,22 +350,15 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O2 -Wall -W -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_frakablak.cpp moc_frakszal.cpp
+compiler_moc_header_make_all: moc_frakszal.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_frakablak.cpp moc_frakszal.cpp
-moc_frakablak.cpp: frakablak.h \
-		frakszal.h \
-		frakablak.h \
-		moc_predefs.h \
-		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/misi/Asztal/mandelbrot/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/misi/Asztal/mandelbrot -I/home/misi/Asztal/mandelbrot -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include frakablak.h -o moc_frakablak.cpp
-
+	-$(DEL_FILE) moc_frakszal.cpp
 moc_frakszal.cpp: frakszal.h \
 		frakablak.h \
 		frakszal.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/misi/Asztal/mandelbrot/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/misi/Asztal/mandelbrot -I/home/misi/Asztal/mandelbrot -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include frakszal.h -o moc_frakszal.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/misi/Asztal/prog1ora/Prog1/week2/mandelbrot/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/misi/Asztal/prog1ora/Prog1/week2/mandelbrot -I/home/misi/Asztal/prog1ora/Prog1/week2/mandelbrot -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include frakszal.h -o moc_frakszal.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -396,9 +387,6 @@ frakszal.o: frakszal.cpp frakszal.h \
 main.o: main.cpp frakablak.h \
 		frakszal.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
-
-moc_frakablak.o: moc_frakablak.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_frakablak.o moc_frakablak.cpp
 
 moc_frakszal.o: moc_frakszal.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_frakszal.o moc_frakszal.cpp

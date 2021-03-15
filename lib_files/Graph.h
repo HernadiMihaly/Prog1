@@ -174,6 +174,11 @@ void add(Point p1, Point p2)
 
 };
 
+struct Arrow : Line {
+	Arrow(Point p1, Point p2): Line(p1,p2){}
+	void draw_lines() const;
+};
+
 struct Open_polyline : Shape {
 	Open_polyline(){};
 	Open_polyline(initializer_list<Point> lst) : Shape(lst){};
@@ -214,6 +219,46 @@ private:
 
 };
 
+struct Box : Shape {
+
+Box(Point p,int ww,int hh, int r): w(ww), h(hh), rad(r){
+if (h<=0 || w<=0) error("Nem jó oldalhossz.");
+        if (rad > (w>h?h:w)/2) error("túl nagy a szög az oldalhoz képest");
+add(p);
+}
+
+Box(Point x, Point y, int r):w(y.x - x.x),h(y.y - x.y), rad(r){
+
+	if (h<=0 || w<=0) error("Nem jó oldalhossz.");
+        if (rad > (w>h?h:w)/2) error("túl nagy a szög az oldalhoz képest");
+	add(x);
+}
+
+void draw_lines() const;
+
+void set_height(int hh){
+if (hh<=0) error("Nem jó oldalhossz.");
+h= hh;
+}
+int height() const {return h;}
+
+void set_width(int ww){
+if (ww<=0) error("Nem jó oldalhossz.");
+w=ww;
+}
+int width() const {return w;}
+
+void set_radius(int r){
+if (r > (w>h?h:w)/2) error ("túl nagy a szög az oldalhoz képest");
+rad=r;
+}
+int get_radius() const {return rad;}
+
+protected:
+int rad;
+int h, w;
+};
+
 struct Text : Shape {
 
 Text (Point x, const string& s): lab(s) {add(x);}
@@ -233,6 +278,21 @@ private:
 string lab;
 Font fnt {fl_font()};
 int fnt_sz {(fl_size()<14)?14:fl_size()};
+
+};
+
+struct BoxText : Box {
+BoxText(Point xx, Point yy, int rr, string s):
+	Box(xx,yy,rr), label(Point(xx.x+w/4, xx.y+h/2+5),s){}
+
+BoxText(Point xy, int ww, int hh , int r, string s):
+	Box(xy,ww,hh,r), label(Point(xy.x+ww/4, xy.y+hh/2+5),s){}
+
+void draw_lines() const;
+void move(int dx, int dy);
+void set_color(Color c);
+
+Text label;
 
 };
 
@@ -280,6 +340,59 @@ struct Ellipse : Shape {
 private:
     int w;
     int h;
+};
+
+
+struct Arc : Shape {
+
+Arc(Point p, int ww, int hh, double aa1, double aa2):w(ww), h(hh), a1(aa1), a2(aa2) 
+{
+add(Point(p.x-ww,p.y-hh));
+
+if (aa1>=aa2) error ("Az első szög nem lehet nagyobb mint a második");
+}
+
+
+void draw_lines() const;
+Point center() const { return Point(point(0).x+w, point(0).y+h); }
+
+void set_major(int ww) 
+	{ 	
+	set_point(0,Point{center().x-ww,center().y-h});
+							
+	w=ww; 
+	}
+	int major() const {return w;}
+void set_minor(int hh)
+	{
+	set_point(0, Point{center().x-w,center().y-hh});
+	
+	h=hh;
+	}
+	int minor() const {return h;}
+void set_angle1(double d) 
+	{
+	if (d>=a2) error ("Az első szög nem lehet nagyobb mint a második");
+	a1=d;
+	}
+	
+void set_angle2(double d) 
+	{
+	if (d<=a1) error ("Az első szög nem lehet nagyobb mint a második");
+	a2=d;
+	}
+	
+void set_angles(double d1, double d2)
+	{
+	if (d1>=d2) error ("Az első szög nem lehet nagyobb mint a második");
+	a1=d1;
+	a2=d2;
+	}
+	
+private:
+int w,h;
+double a1,a2;
+
 };
 
 
