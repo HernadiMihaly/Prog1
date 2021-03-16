@@ -147,12 +147,9 @@ for (int i=0; i<7; ++i){
 	vp +=t;
 	kp +=nyiltav;
 }
-<<<<<<< HEAD
 win.wait_for_button();
 Simple_window win2 (Point(100,100),1200,1000, "Exes");
-=======
-	win.wait_for_button();
->>>>>>> 5e9179a2c5f33e3803ca4c625d3417b6b8b481a1
+
 Vector_ref<Graph_lib::Rectangle> rects;
  for (int i1 = 0; i1<4; ++i1) {
         for (int i2 = 0; i2<4; ++i2) {
