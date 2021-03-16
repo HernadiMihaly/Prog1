@@ -147,7 +147,7 @@ for (int i=0; i<7; ++i){
 	vp +=t;
 	kp +=nyiltav;
 }
-
+	win.wait_for_button();
 Vector_ref<Graph_lib::Rectangle> rects;
  for (int i1 = 0; i1<4; ++i1) {
         for (int i2 = 0; i2<4; ++i2) {
