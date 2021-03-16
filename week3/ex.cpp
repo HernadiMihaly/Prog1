@@ -147,21 +147,23 @@ for (int i=0; i<7; ++i){
 	vp +=t;
 	kp +=nyiltav;
 }
-
+win.wait_for_button();
+Simple_window win2 (Point(100,100),1200,1000, "Exes");
 Vector_ref<Graph_lib::Rectangle> rects;
  for (int i1 = 0; i1<4; ++i1) {
         for (int i2 = 0; i2<4; ++i2) {
-            for (int j = 0; j<16; ++j) {
-                for (int k = 0; k<16; ++k) {
-                    rects.push_back(new Graph_lib::Rectangle(Point(16*12*i1+12*k,16*12*i2+12*j),12,12));
-                    rects[rects.size()-1].set_fill_color(fl_rgb_color(15*(4*i1+i2),15*j,15*k));
+            for (int j = 0; j<20; ++j) {
+                for (int k = 0; k<20; ++k) {
+                    rects.push_back(new Graph_lib::Rectangle(Point(20*10*i1+10*k,20*10*i2+10*j),10,10)); 
+                    //10*k és 10*j határozza meg melyik kis négyzetet rajzolom épp, 20*10*20*10= 200*200-as egy nagy négyzet
+                    rects[rects.size()-1].set_fill_color(fl_rgb_color(15*(4*i1+i2),13*j,13*k));
                     rects[rects.size()-1].set_color(Color(Color::black,Color::invisible));
-                    win.attach(rects[rects.size()-1]);
+                    win2.attach(rects[rects.size()-1]);
                 }
             }
         }
     }
-    win.wait_for_button();
+    win2.wait_for_button();
 
 }
 catch(exception& e){
