@@ -249,6 +249,68 @@ void Arc::draw_lines() const
 	fl_arc(point(0).x, point(0).y, w+w, h+h, a1, a2);
 }
 
+Circle_face::Circle_face(Point p, int rr)
+	: Circle(p,rr), left_eye(Point(p.x-rr/5, p.y-rr/2), rr/8, rr/3),
+			 right_eye(Point(p.x+rr/5, p.y-rr/2), rr/8, rr/3),
+	mouth(p, rr*0.6, rr*0.6, 180, 360) {
+		
+		left_eye.set_fill_color(color());
+		left_eye.set_color(Color::invisible);
+		right_eye.set_fill_color(color());
+		right_eye.set_color(Color::invisible);
+	}
+
+void Circle_face::draw_lines() const{
+	Circle::draw_lines();
+	
+	if (color().visibility()){
+		left_eye.draw();
+		right_eye.draw();
+		mouth.draw();
+	}
+}
+
+void Circle_face::set_color(Color c){
+	Shape::set_color(c);
+	left_eye.set_fill_color(c);
+	right_eye.set_fill_color(c);
+	mouth.set_color(c);
+}
+
+void Circle_face::set_style(Line_style ls){
+	Circle::set_style(ls);
+	mouth.set_style(ls);
+}
+
+void Circle_face::move(int dx, int dy){
+	Shape::move(dx,dy);
+	left_eye.move(dx,dy);
+	right_eye.move(dx,dy);
+	mouth.move(dx,dy);
+}
+void Circle_face::set_radius(int rr){
+	Circle::set_radius(rr);
+	left_eye.set_minor(rr/3);
+	left_eye.set_major(rr/8);
+	right_eye.set_minor(rr/3);
+	right_eye.set_major(rr/8);
+	mouth.set_major(rr*0.6);
+	mouth.set_minor(rr*0.6);
+	
+	int dx= rr/5 - (right_eye.center().x-center().x); //szem középpontjából vonjuk ki a az új körünk kp-ját
+	int dy= (center().y-right_eye.center().y) - rr/2; //itt fordítva
+	right_eye.move(dx,dy);
+	left_eye.move(-dx,dy);
+
+}
+
+Smiley::Smiley(Point p, int rr): Circle_face(p,rr) {}
+
+Frowny::Frowny(Point p, int rr)
+	:Circle_face(p,rr) {
+	mouth.set_angles(0,180);
+	mouth.move(0,0.7*rr);
+	}
 //------------------------------------------------------------------------------
 
 Ellipse::Ellipse(Point p, int w, int h): w{w}, h{h}
@@ -285,11 +347,18 @@ Point Ellipse::focus2() const
 }  
 
 //------------------------------------------------------------------------------
-
 void Ellipse::draw_lines() const
 {
-    if (color().visibility())
-        fl_arc(point(0).x,point(0).y,w+w,h+h,0,360);
+   if (fill_color().visibility()) {
+		fl_color(fill_color().as_int());
+		fl_pie(point(0).x,point(0).y,w+w-1,h+h-1,0,360);
+		fl_color(color().as_int());
+	}
+
+	if (color().visibility()) {
+		fl_color(color().as_int());
+		fl_arc(point(0).x,point(0).y,w+w,h+h,0,360);
+	}
 }
 
 void draw_mark(Point x, char c){
@@ -447,6 +516,33 @@ void Axis::move(int dx, int dy)
 	Shape::move(dx, dy);
 	notches.move(dx, dy);
 	label.move(dx, dy);
+}
+
+void Binary_tree:: draw_lines() const
+{	
+	Vector_ref <Circle> circ;
+	if (color().visibility()){
+	
+		if(szintek>=1){
+		circ.push_back(new Circle(Point{point(0).x, point(0).y}, 12));
+		circ[0].draw();
+		}
+		int cspszam= csp_szam-1;
+		int node_tav= 30;
+		int szint_tav= 100;
+		if(csp_szam>=2){
+		
+			for (int i=1; i<cspszam; ++i){
+			circ.push_back(new Circle(Point{point(0).x+node_tav,point(0).y+szint_tav}, 12));
+			circ.push_back(new Circle(Point{point(0).x-node_tav,point(0).y+szint_tav}, 12));
+			circ[i].draw();
+			circ[i+1].draw();
+			node_tav+=30;
+			szint_tav+=100;
+			}
+		}
+		
+	}
 }
 
 } //end Graph

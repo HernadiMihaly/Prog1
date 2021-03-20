@@ -298,7 +298,7 @@ Text label;
 
 struct Circle : Shape
 {
-private:
+protected:
 	int r;
 public:
 	Circle(Point p, int rr): r{rr} {
@@ -312,6 +312,7 @@ public:
 	void set_radius(int rr) { r=rr; }
 	int radius() const { return r; }
 };
+
 
 struct Ellipse : Shape {
     Ellipse(Point p, int w, int h);    // center, min, and max distance from center
@@ -395,6 +396,32 @@ double a1,a2;
 
 };
 
+struct Circle_face : Circle {
+	void draw_lines() const;
+	void move(int dx, int dy);
+	void set_color(Color c);
+	void set_style(Line_style ls);
+	void set_radius(int rr);
+	
+	
+protected:
+	Arc mouth;
+	Circle_face(Point p, int rr);
+	
+private:
+	Ellipse left_eye;
+	Ellipse right_eye;
+
+};
+
+struct Smiley : Circle_face {
+	Smiley(Point p, int rr);
+
+};
+
+struct Frowny : Circle_face {
+	Frowny(Point p, int rr);
+};
 
 struct Marked_polyline: Open_polyline {
 
@@ -461,6 +488,24 @@ struct Axis : Shape {
 
 	Text label;
 	Lines notches;
+};
+
+struct Binary_tree : Shape {
+	Binary_tree(Point xy, int levels): szintek(levels){
+		if (szintek<0) error("Nem lehet negatív számú csomópont");
+    		if (szintek==0) return;
+		add(xy);
+			for (int i=1; i<szintek; ++i){
+				csp_szam= pow(2,i);
+			}
+			cout << csp_szam << '\n';
+	}
+	void draw_lines() const;
+	
+	private:
+	int szintek;
+
+	int csp_szam= 0; //csomopontok szama a legelsőn kívül
 };
 
 }
