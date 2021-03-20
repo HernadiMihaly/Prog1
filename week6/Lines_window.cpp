@@ -83,12 +83,13 @@ void Lines_window::cb_dashdot(Address, Address pw){
 void Lines_window::cb_dashdotdot(Address, Address pw){
 	reference_to<Lines_window>(pw).dashdotdot_pressed();
 }
-void Lines_window::cb_solid(Address, Address pw){
-	reference_to<Lines_window>(pw).solid_pressed();
-}
 void Lines_window::cb_dash(Address, Address pw){
 	reference_to<Lines_window>(pw).dash_pressed();
 }
+void Lines_window::cb_solid(Address, Address pw){
+	reference_to<Lines_window>(pw).solid_pressed();
+}
+
 void Lines_window::cb_lsmenu(Address, Address pw){
 	reference_to<Lines_window>(pw).lsmenu_pressed();
 }

@@ -14,14 +14,14 @@ using namespace Graph_lib;
 
 try{
 
-//ablak beállításai
+//ablak beállításai:
 constexpr int xmax= 600;
 constexpr int ymax= 600;
 Point tl {100,100};
 
 Simple_window win (tl,xmax,ymax, "Function graphs");
 
-//tengelyek beállításai
+//tengelyek beállításai:
 constexpr int xlength= xmax-200;
 constexpr int ylength= ymax-200;
 constexpr int x_orig= ymax/2;
@@ -37,7 +37,7 @@ Axis y (Axis::y,Point(x_orig,500),ylength,ylength/y_scale ,"1 == 20 pixels" );
 x.set_color(Color::red);
 y.set_color(Color::red);
 
-//függvények és beállításaik
+//függvények és beállításaik:
 
 constexpr int min_range= -10;
 constexpr int max_range= 11;
