@@ -53,13 +53,19 @@ Person p2;
 cin >> p2;
 cout << p2 <<'\n';
 
-cout << "A ciklusos kiíratás: " << '\n';
+cout << "A ciklusos kiíratás (ha szeretné, hogy vége legyen, gépelje be az ''end now 1'' parancsot): " << '\n';
 vector<Person> v;
 Person p3;
-for (int i=0; i<10; i++){
-	cin >> p3;
+for (Person p3; cin >> p3;){
 	v.push_back(p3);
-	cout << v[i] << '\n';	
+	if (p3.full_name()== "end now" && p3.get_age()==1){
+	break;
+	}	
+}
+
+for (int i=0; i< v.size() ; i++){
+cout << v[i] << '\n';	
+
 }
 }
 catch(exception &e){

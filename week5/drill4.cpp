@@ -32,7 +32,7 @@ constexpr int x_scale= 20;
 constexpr int y_scale= 20;
 
 Axis x (Axis::x,Point(100,y_orig),xlength,xlength/x_scale ,"1 == 20 pixels" );
-Axis y (Axis::y,Point(x_orig,500),xlength,ylength/y_scale ,"1 == 20 pixels" );
+Axis y (Axis::y,Point(x_orig,500),ylength,ylength/y_scale ,"1 == 20 pixels" );
 
 x.set_color(Color::red);
 y.set_color(Color::red);
