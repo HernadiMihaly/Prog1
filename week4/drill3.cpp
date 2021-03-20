@@ -79,4 +79,6 @@ d22.pvf();
 cout << "Megegyszer kiirva: " << '\n';
 f(d21);
 f(d22);
+
+f(d21);
 }

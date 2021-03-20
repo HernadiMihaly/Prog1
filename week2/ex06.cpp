@@ -21,7 +21,7 @@ try{
 	//window ami nem fer bele a screenbe
 	Simple_window win2 {Point{100,100},3*x_max(),3*y_max(),"Canvas"};
 	win2.wait_for_button();
-	//lathatoan itt mar teljesenmutatni fogja azt a rectangle-t amit 		elobb nem teljesen
+	//lathatoan itt mar teljesen mutatni fogja azt a rectangle-t amit elobb nem teljesen
 	Rectangle r2 {Point{10,10},700,500};
 	win2.attach(r2);
 	r2.set_fill_color(Color::blue);
