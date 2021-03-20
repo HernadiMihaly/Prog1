@@ -12,7 +12,7 @@ private:
 	Button next_button;
 	Button quit_button;
 	Button menu_button;
-	Button lsmenu_button;
+	Button lsmenu_button; //linestyle gomb
 	
 	In_box next_x;
 	In_box next_y;
