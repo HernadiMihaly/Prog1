@@ -126,10 +126,11 @@ protected:
 	void add(Point p) { points.push_back(p); }
 	void set_point(int i, Point p) { points[i] = p; }
 	virtual void draw_lines() const;
+	void clear_points() {points.clear();}
 
 private:
 	vector<Point> points;
-	Color lcolor {fl_color()};
+	Color lcolor {Fl_Color()};
 	Line_style ls {0};
 	Color fcolor {Color::invisible};
 };
@@ -479,6 +480,27 @@ struct Function : Shape {
 	Function(Fct f, double r1, double r2, Point orig, int count = 100, double xscale = 25, double yscale = 25);
 };
 
+struct Funct : Function {
+	Funct(Fct f, double r1, double r2, Point orig, int count = 100, double xscale = 25, double yscale = 25, double precision = 1);
+	
+	void resetFct(Fct f) {fct=f; reset();}
+	void resetrange(double rr1, double rr2) {if (rr2>rr1) error("Rossz tartomány"); range1=rr1; range2=rr2; reset();}
+	void resetOrig(Point o) {origo=o; reset();}
+	void resetCount(int c) {if (c<0) error("A pontok száma nem lehet negatív"); counter=c; reset();}
+	void resetXScale(double x) {if (x==0) error("A skálázás nem lehet 0"); scalex=x; reset();}
+	void resetYScale(double y) {if (y==0) error("A skálázás nem lehet 0");scaley=y; reset();}
+	void resetPrecision(double precision) {prec = precision; reset(); }
+	
+	private:
+	void reset();
+	int counter;
+	double scalex, scaley, range1, range2;
+	Point origo;
+	Fct* fct;
+	double prec;
+	
+};
+
 struct Axis : Shape {
 	enum Orientation { x, y, z };
 	Axis (Orientation d, Point xy, int length, int number_of_notches = 0, string label = "");
@@ -506,6 +528,24 @@ struct Binary_tree : Shape {
 	int szintek;
 
 	int csp_szam= 0; //csomopontok szama a legelsőn kívül
+};
+
+struct Bar_graph : Shape{
+	Bar_graph(Point orig, double yscale= 15, int width= 5, int space=5);
+	
+	void draw_lines() const;
+	
+	void addvalue(double x);
+	double get_value(int i) const {return vals[i];}
+	
+	void move(int x, int y);
+	
+	private:
+	vector <double> vals;
+	Point origin;
+	double ysc;
+	int wd, spc;
+
 };
 
 }

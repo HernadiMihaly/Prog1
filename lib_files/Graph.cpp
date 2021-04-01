@@ -457,6 +457,22 @@ Function::Function(Fct f, double r1, double r2, Point xy, int count, double xsca
 	}
 }
 
+Funct::Funct(Fct f, double r1, double r2, Point orig, int count, double xscale, double yscale, double precision)
+	:Function(f,r1,r2,orig,count,xscale,yscale),fct(f),range1(r1), range2(r2),origo(orig),counter(count),scalex(xscale),scaley(yscale), prec(precision){}
+
+//------------------------------
+
+void Funct::reset(){
+    double dist = (range2-range1)/counter;
+    double r1 = range1;
+    clear_points();
+    for (int i = 0; i<counter; ++i) {
+        add(Point(origo.x+int(int(r1*scalex)/prec)*prec,
+            origo.y-int(int(fct(r1)*scaley)/prec)*prec));
+        r1 += dist;
+    }
+}
+
 Axis::Axis(Orientation d, Point xy, int length, int n, string lab )
 	:label(Point(0,0), lab)
 {
@@ -544,5 +560,41 @@ void Binary_tree:: draw_lines() const
 		
 	}
 }
+Bar_graph:: Bar_graph(Point orig, double yscale, int width, int space)
+		: ysc(yscale), wd(width), spc(space)
+		{ 
+		if (space<=0) error ("Túl kicsi a távolság az oszlopok között");
+		if (yscale<1) error ("Túl kicsi az oszlop méret: Nagyobb y skála szükséges");
+		if (width<1) error ("Nagyobb szélesség szükséges az oszlop létrehozásához");
+		add(orig);
+		}
+
+void Bar_graph::addvalue(double x){
+	vals.push_back(x);
+}
+
+void Bar_graph::move(int x, int y){
+	Shape:: move(x,y);
+}
+
+void Bar_graph::draw_lines() const{
+	for (int i=0; i<vals.size(); i++){
+		int x= point(0).x + i*(wd+spc);
+		int y= point(0).y + (vals[i]>=0 ? vals[i] * ysc * -1 : 0);
+		
+		
+		if (fill_color().visibility()) {
+		    fl_color(fill_color().as_int());
+		    fl_rectf(x,y,wd,abs(vals[i]*ysc)); //(Pont.x, Pont.y, szelesseg, magassa)
+		    fl_color(color().as_int());
+		}
+
+		if (color().visibility()) {
+		    fl_color(color().as_int());
+		    fl_rect(x,y,wd,abs(vals[i]*ysc));
+		}
+	}
+}
+
 
 } //end Graph
