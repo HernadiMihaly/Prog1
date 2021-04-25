@@ -2,7 +2,7 @@
 
 using namespace Graph_lib;
 
-struct Lines_window: Window {
+struct Lines_window: Graph_lib::Window {
 	Lines_window(Point xy, int w, int h, const string& title);
 	
 private:
