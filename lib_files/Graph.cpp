@@ -76,11 +76,9 @@ void Arrow::draw_lines() const
 	double vonal_x = 8/vonalhossz*point(0).x + (1-8/vonalhossz)*point(1).x;
     	double vonal_y = 8/vonalhossz*point(0).y + (1-8/vonalhossz)*point(1).y;
 	
-	//vertex bal oldali vonala
 	double pl_x = vonal_x + 4/vonalhossz*(point(1).y-point(0).y);
 	double pl_y = vonal_y + 4/vonalhossz*(point(0).x-point(1).x);
 	
-	//vertex jobb oldali vonala
 	double pr_x = vonal_x + 4/vonalhossz*(point(0).y-point(1).y);
 	double pr_y = vonal_y + 4/vonalhossz*(point(1).x-point(0).x);
 
