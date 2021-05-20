@@ -324,27 +324,6 @@ Point Ellipse::center() const
 }
 
 //------------------------------------------------------------------------------
-
-Point Ellipse::focus1() const 
-{ 
-	if(h<=w) // foci are on the x axis
-		return Point{center().x+int(sqrt(double(w*w-h*h))),center().y}; 
-	else     // foci are on the y axis
-		return Point{center().x,center().y+int(sqrt(double(h*h-w*w)))}; 
-}
-
-//------------------------------------------------------------------------------
-
-
-Point Ellipse::focus2() const
-{
-        if(h<=w) // foci are on the x axis
-                return Point{center().x-int(sqrt(double(w*w-h*h))),center().y};
-        else     // foci are on the y axis
-                return Point{center().x,center().y-int(sqrt(double(h*h-w*w)))};
-}  
-
-//------------------------------------------------------------------------------
 void Ellipse::draw_lines() const
 {
    if (fill_color().visibility()) {
