@@ -321,8 +321,6 @@ struct Ellipse : Shape {
     void draw_lines() const;
 
     Point center() const;
-    Point focus1() const;
-    Point focus2() const;
 
     void set_major(int ww) 
     { 	
